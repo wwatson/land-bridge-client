@@ -1,6 +1,8 @@
 import React from 'react';
 import logo from './beachbody-new-logo.png';
 import './index.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
 
 function App(props) {
   return (

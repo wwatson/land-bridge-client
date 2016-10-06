@@ -1,5 +1,6 @@
 import React from 'react';
 import { hashHistory } from 'react-router'
+import { Button } from 'react-bootstrap';
 
 class Login extends React.Component {
   constructor() {
@@ -15,7 +16,7 @@ class Login extends React.Component {
   }
 
   handleLogin(event) {
-    fetch('https://7onig81f7e.execute-api.us-west-2.amazonaws.com/test/testLogin', {
+    fetch('https://fvusi63s5g.execute-api.us-west-2.amazonaws.com/Test/loginIDM', {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -57,7 +58,11 @@ class Login extends React.Component {
             value={this.state.password}
             onChange={this.handlePasswordChange}
           />
-          <input type="submit" value="Post" />
+          <Button type="submit" value="Post"
+                  bsStyle="success"
+                  bsSize="large">
+            Submit
+          </Button>
         </form>
       </div>
     );
