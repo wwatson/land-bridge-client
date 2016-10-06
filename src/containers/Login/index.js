@@ -2,6 +2,20 @@ import React from 'react';
 import { hashHistory } from 'react-router'
 import { Button } from 'react-bootstrap';
 
+function checkStatus(response) {
+  if (response.status >= 200 && response.status < 300) {
+    return response
+  } else {
+    var error = new Error(response.statusText)
+    error.response = response
+    throw error
+  }
+}
+
+function parseJSON(response) {
+  return response.json()
+}
+
 class Login extends React.Component {
   constructor() {
     super();
@@ -16,20 +30,16 @@ class Login extends React.Component {
   }
 
   handleLogin(event) {
-    fetch('https://fvusi63s5g.execute-api.us-west-2.amazonaws.com/Test/loginIDM', {
+    fetch('https://token.bbtrain.me/idm', {
       method: 'POST',
-      credentials: 'include',
       headers: {
         'Authorization': 'Basic ' + btoa(this.state.username + ':' + this.state.password)
       }
-    }).then(function(response) {
-      console.log(response.headers.get('Content-Type'));
-      console.log(response.headers.get('Date'));
-      console.log(response.status);
-      console.log(response.statusText);
-      this.setState({user: response.data});
-
-      hashHistory.push('/conversation')
+    }).then(checkStatus)
+      .then(parseJSON)
+      .then((data) => {
+        this.setState({user: data});
+        hashHistory.push('/conversation')
     });
   }
 
@@ -44,25 +54,26 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-      <div>Login Page Component</div>
+      <div>Login to Beachbody Club</div>
         <form className="loginForm" onSubmit={this.handleLogin}>
-          <input
-            type="text"
-            placeholder="email address"
-            value={this.state.username}
-            onChange={this.handleUserChange}
-          />
-          <input
-            type="password"
-            placeholder="password"
-            value={this.state.password}
-            onChange={this.handlePasswordChange}
-          />
+          <div className="row">
+            <input
+              type="text"
+              placeholder="email address"
+              value={this.state.username}
+              onChange={this.handleUserChange}
+            />
+          </div>
+          <div className="row">
+            <input
+              type="password"
+              placeholder="password"
+              value={this.state.password}
+              onChange={this.handlePasswordChange}
+            />
+          </div>
           <Button type="submit" value="Post"
-                  bsStyle="success"
-                  bsSize="large">
-            Submit
-          </Button>
+                  bsStyle="success">Go!</Button>
         </form>
       </div>
     );
