@@ -1,19 +1,13 @@
 # land-bridge-client
 
+`grab repo`
 
-## System dependencies
-  * nvm
-  *  node
-  *  npm
+# Install node dependencies
+`npm install`
 
-## Instructions for running
-  ```
-  $> npm start
-  ```
+# to deploy and create static assets
+`npm run build`
 
-## Instructions for building for production
-  ```
-  $> npm build
-  ```
+# to run local server
+`npm start`
 
-See https://github.com/facebookincubator/create-react-app for more info
