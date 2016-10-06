@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from './beachbody-new-logo.png';
 import './index.css';
 
 function App(props) {
