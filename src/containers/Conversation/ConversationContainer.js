@@ -6,21 +6,40 @@ class ConversationContainer extends React.Component {
     conversation.localMedia.attach(this.refs.localMedia);
 
     conversation.on('participantConnected', participant => {
+      console.log("Participant '" + participant.identity + "' connected");
       participant.media.attach(this.refs.remoteMedia);
+    });
+
+    conversation.on('participantDisconnected', function (participant) {
+      console.log("Participant '" + participant.identity + "' disconnected");
     });
   }
 
   componentWillUnmount() {
     const conversation = this.props.conversation;
     conversation.localMedia.stop();
-    conversation.disconnect();
+
+    try {
+      conversation.disconnect();
+    } catch(err) {
+      //do nothing
+    }
   }
 
   render() {
     return (
       <div>
-        <div ref='remoteMedia' className='media-container'></div>
-        <div ref='localMedia' className='media-container'></div>
+        <div>
+          Remote
+          <div ref='remoteMedia' className='media-container'></div>
+        </div>
+
+        <hr />
+
+        <div>
+          Local
+          <div ref='localMedia' className='media-container'></div>
+        </div>
       </div>
     );
   }

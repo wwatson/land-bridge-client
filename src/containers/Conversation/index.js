@@ -121,11 +121,14 @@ class Conversation extends React.Component {
   }
 
   conversationStarted(conversation) {
-
     console.log('In an active Conversation');
     this.setState({
       connectingToConversation: false,
       activeConversation: conversation
+    });
+
+    conversation.on('disconnected', () => {
+      this.disconnectActiveConversation();
     });
   }
 
@@ -141,7 +144,16 @@ class Conversation extends React.Component {
     if (this.state.connectingToConversation) {
       conversationContent = (<div>Connecting...</div>);
     } else if(this.state.activeConversation) {
-      conversationContent = <ConversationContainer conversation={this.state.activeConversation} />
+      conversationContent =
+      (
+        <div>
+          <ConversationContainer conversation={this.state.activeConversation} />
+
+          <div>
+            <button onClick={this.disconnectActiveConversation}>Disconnect</button>
+          </div>
+        </div>
+      );
     }
 
     let connectingContent;
@@ -158,10 +170,6 @@ class Conversation extends React.Component {
           </div>
 
           {conversationContent}
-
-          <div>
-            <button onClick={this.disconnectActiveConversation}>Disconnect</button>
-          </div>
         </div>
       );
     }
