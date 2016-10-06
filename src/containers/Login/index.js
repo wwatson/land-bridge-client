@@ -15,7 +15,7 @@ class Login extends React.Component {
   }
 
   handleLogin(event) {
-    fetch('https://k860wxbgnh.execute-api.us-west-2.amazonaws.com/PROD/loginidm', {
+    fetch('https://7onig81f7e.execute-api.us-west-2.amazonaws.com/test/testLogin', {
       method: 'POST',
       credentials: 'include',
       headers: {
