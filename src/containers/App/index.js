@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import logo from './beachbody-new-logo.png';
 import './index.css';
 
