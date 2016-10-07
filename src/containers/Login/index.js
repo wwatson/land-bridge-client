@@ -112,7 +112,6 @@ class Login extends React.Component {
     }
     return (
       <div>
-      <div>Login to Beachbody Club</div>
         <form className="loginForm" onSubmit={this.handleLogin}>
           <div className="row">
             <input

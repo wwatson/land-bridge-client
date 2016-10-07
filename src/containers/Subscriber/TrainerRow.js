@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import { LinkContainer } from 'react-router-bootstrap';
 import avatar from './avatar-empty.png';
-import { Panel, Glyphicon } from 'react-bootstrap';
+import { Panel, Glyphicon, Button } from 'react-bootstrap';
 
 class TrainerRow extends Component {
   render () {
@@ -18,11 +18,11 @@ class TrainerRow extends Component {
           <img src={avatar} className="Trainer-logo" alt="logo" />
         </div>
         <div className="TrainerRow__rating">
-          {this.props.trainer.starrating}
+          {this.props.trainer.starrating} Stars
         </div>
 
-        <div>
-          <Link to={trainerSessionLinkDescriptor}>Connect</Link>
+        <div className="TrainerRow__connect">
+          <LinkContainer to={trainerSessionLinkDescriptor} ><Button bsStyle="success" block>Connect</Button></LinkContainer>
         </div>
       </Panel>
     );
