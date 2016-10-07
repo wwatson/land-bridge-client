@@ -20,9 +20,11 @@ class Survey extends Component {
     return (
       <div>
         <div className="panel">
-          <p>Please rate your experience</p>
+          <div className="panel-body">
+            <p>Please rate your experience</p>
 
-          <button className="primary" onClick={this.handleSubmit}>Submit</button>
+            <button className="btn btn-primary" onClick={this.handleSubmit}>Submit</button>
+          </div>
         </div>
       </div>
     );

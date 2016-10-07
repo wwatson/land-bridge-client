@@ -10,7 +10,7 @@ function App(props) {
       <div className="App__header">
         <img src={logo} className="App-logo" alt="logo" />
       </div>
-      <div className="App__body">
+      <div className="App__body container">
         {React.Children.toArray(props.children)}
       </div>
     </div>

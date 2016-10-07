@@ -48,6 +48,24 @@ class TrainerSession extends Component {
   }
 
   componentDidMount() {
+    this.inviteTimer = setTimeout(() => {
+      self.props.router.push({
+        pathname: '/subscriber',
+        state: {
+          flash: {
+            status: 'danger',
+            message: 'You invitation was declined.'
+          }
+        }
+      });
+    })
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.inviteTimer);
+  }
+
+  componentDidMount() {
     this.getToken('test');
   }
 
@@ -132,17 +150,22 @@ class TrainerSession extends Component {
         <div>
           <ConversationContainer conversation={this.state.activeConversation} />
 
-          <div>
-            <button onClick={this.disconnectActiveConversation}>Disconnect</button>
+          <div className="disconnect-wrapper">
+            <button className="btn btn-danger" onClick={this.disconnectActiveConversation}>Disconnect</button>
           </div>
         </div>
       );
     }
 
+    let progressBar;
+    if (!this.activeConversation) {
+      progressBar = (<ProgressBar active now={50}/>);
+    }
+
     return (
       <div className="TrainerSession">
         <p>Attempting to connect with {this.state.trainer.fullname}</p>
-        <ProgressBar active now={50}/>
+        {progressBar}
         <div className="">
           {conversationContent}
         </div>

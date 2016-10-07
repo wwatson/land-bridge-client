@@ -13,7 +13,7 @@ import request from '../../utils/request.js';
 import ConversationContainer from '../Conversation/ConversationContainer';
 
 import avatar from '../Subscriber/avatar-empty.png';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, ProgressBar } from 'react-bootstrap';
 
 const URL_BASE = process.env.REACT_APP_TOKEN_API_ENDPOINT_BASE;
 
@@ -52,8 +52,14 @@ class Trainer extends Component {
   }
 
   handleInvitation(invite) {
+    // request(`${URL_BASE}/token?identity=${identity}`)
+    //   .then(this.handleGetTokenSuccess, this.handleGetTokenError);
+
     this.setState({
       incomingInvitation: invite,
+      incomingInvitationUser: {
+        name: "Steve Polk"
+      },
       showModal: true
     });
   }
@@ -108,6 +114,10 @@ class Trainer extends Component {
   }
 
   getToken(identity) {
+    this.setState({
+      isLoadingToken: true
+    });
+
     request(`${URL_BASE}/token?identity=${identity}`)
       .then(this.handleGetTokenSuccess, this.handleGetTokenError);
   }
@@ -148,59 +158,80 @@ class Trainer extends Component {
         <div>
           <ConversationContainer conversation={this.state.activeConversation} />
 
-          <div>
-            <button onClick={this.disconnectActiveConversation}>Disconnect</button>
+          <div className="disconnect-wrapper">
+            <button className="btn btn-danger" onClick={this.disconnectActiveConversation}>Disconnect</button>
           </div>
         </div>
       );
     }
 
     let availabilityContent;
-    if (this.state.accessToken) {
-      availabilityContent = (<div>Waiting for subscribers</div>)
+    if (this.state.accessToken && !this.state.activeConversation) {
+      availabilityContent = (
+        <div>
+          <ProgressBar bsStyle="info" active now={50}/>
+          Waiting for requests
+        </div>
+      );
+    } else if (this.state.activeConversation) {
+      availabilityContent = (
+        <div>
+          <ProgressBar bsStyle="success" now={100} />
+          Connected
+        </div>
+      );
+
     } else {
-      availabilityContent = (<div>Disconnected</div>);
+      availabilityContent = (
+        <div>
+          <ProgressBar bsStyle="danger" now={100} />
+          Disconnected
+        </div>
+      );
+    }
+
+    let invitationModal;
+    if (this.state.showModal) {
+      invitationModal = (
+        <Modal show={this.state.showModal}>
+          <Modal.Header>
+            <Modal.Title>Incoming Request</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>{this.state.incomingInvitationUser.name} is requesting you as a trainer. Please accept or reject or reject.</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button bsStyle="danger" onClick={this.rejectInvitation}>Reject</Button>
+            <Button bsStyle="success" onClick={this.acceptInvitation}>Accept</Button>
+          </Modal.Footer>
+        </Modal>
+      );
     }
 
     return (
       <div className="Trainer">
-        <div className="Trainer__header">
-          Trainer
-        </div>
-
+        <h2 className="Trainer__header">Trainer</h2>
         <div className="Trainer__body">
-          <div className="panel">
-            <div className="Trainer__name">
-              {`${this.state.user.firstName} ${this.state.user.lastName}`}
-            </div>
+          <div className="Trainer__details panel">
+            <div className="panel-body">
+              <div className="Trainer__avatar">
+                <img src={avatar} className="Trainer-logo" alt="logo" />
+              </div>
 
-            <div className="Trainer__avatar">
-              <img src={avatar} className="Trainer-logo" alt="logo" />
-            </div>
+              <div className="Trainer__name">
+                {`${this.state.user.firstName} ${this.state.user.lastName}`}
+              </div>
 
-            <div className="Trainer__availability">
-              {availabilityContent}
+              <div className="Trainer__availability">
+                {availabilityContent}
+              </div>
             </div>
           </div>
-
-          <hr />
 
           {conversationContent}
         </div>
 
-        <Modal show={this.state.showModal}>
-          <Modal.Header>
-            <Modal.Title>Modal heading</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <h4>Text in a modal</h4>
-            <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button className="danger" onClick={this.rejectInvitation}>Reject</Button>
-            <Button className="primary" onClick={this.acceptInvitation}>Accept</Button>
-          </Modal.Footer>
-        </Modal>
+        {invitationModal}
       </div>
     );
   }
