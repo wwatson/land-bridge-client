@@ -13,9 +13,9 @@ function parseJSON(response) {
 }
 
 function request(url) {
-  return fetch(url).
-    then(checkStatus).
-    then(parseJSON);
+  return fetch(url)
+    .then(checkStatus)
+    .then(parseJSON);
 }
 
 export default request;
