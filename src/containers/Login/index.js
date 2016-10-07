@@ -91,7 +91,7 @@ class Login extends React.Component {
   // Handler for the push state for the trainer/subscriber containers
   putUser( is_subscriber ) {
     fetch('https://token.bbtrain.me/user', {
-      method: 'PUT',
+      method: 'POST',
       body: JSON.stringify({
         "guid" : this.state.user.guid,
         "fullname" : this.state.user.firstName + " " + this.state.user.lastName,
