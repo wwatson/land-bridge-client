@@ -211,7 +211,7 @@ class Trainer extends Component {
             <Modal.Title>Incoming Request</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>{this.state.incomingInvitationUser.name} is requesting you as a trainer. Please accept or reject or reject.</p>
+            <p>{this.state.incomingInvitationUser.fullname} is requesting you as a trainer. Please accept or reject or reject.</p>
           </Modal.Body>
           <Modal.Footer>
             <Button bsStyle="danger" onClick={this.rejectInvitation}>Reject</Button>
