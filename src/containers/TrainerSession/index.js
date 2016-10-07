@@ -26,6 +26,7 @@ class TrainerSession extends Component {
     this.conversationStarted = this.conversationStarted.bind(this);
     this.disconnectActiveConversation = this.disconnectActiveConversation.bind(this);
 
+    const user = JSON.parse(localStorage.user);
     this.state = {
       trainer: this.props.location.state.trainer,
       identity: '',
@@ -36,7 +37,8 @@ class TrainerSession extends Component {
       connectingToConversation: false,
       conversationsClient: false,
       previewMedia: null,
-      activeConversation: null
+      activeConversation: null,
+      user
     };
   }
 
@@ -48,7 +50,7 @@ class TrainerSession extends Component {
   }
 
   componentDidMount() {
-    this.getToken(this.state.trainer.guid);
+    this.getToken(this.state.user.guid);
   }
 
   handleGetTokenSuccess(data) {
