@@ -101,7 +101,6 @@ class TrainerSession extends Component {
     this.props.router.push('/subscriber');
   }
 
-
   render() {
     let conversationContent;
     if (this.state.connectingToConversation) {
@@ -119,24 +118,6 @@ class TrainerSession extends Component {
       );
     }
 
-    let connectingContent;
-    if (this.state.accessToken) {
-      connectingContent = (
-        <div>
-          <div>
-            <label>Connect to Identity</label>
-            <input value={this.state.connectToIdentity} onChange={this.handleConnectToIdentityChange} />
-          </div>
-
-          <div>
-            <button onClick={this.connectToConversation}>Connect</button>
-          </div>
-
-          {conversationContent}
-        </div>
-      );
-    }
-
     return (
       <div>
         Attempting to connect with {this.state.trainer.fullname}
@@ -149,7 +130,8 @@ class TrainerSession extends Component {
 }
 
 TrainerSession.propTypes = {
-  location: PropTypes.object
+  location: PropTypes.object,
+  router: PropTypes.object,
 }
 
 export default TrainerSession;
