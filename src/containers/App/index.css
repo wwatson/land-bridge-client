@@ -29,6 +29,7 @@
 }
 
 .loginForm {
+    margin: 2em auto;
     width: 300px;
     text-align: left;
 }
