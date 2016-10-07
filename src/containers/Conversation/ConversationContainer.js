@@ -21,7 +21,7 @@ class ConversationContainer extends React.Component {
 
     try {
       conversation.disconnect();
-    } catch(err) {
+    } catch(err) { // If the conversation has already been disconnected, an error will be thrown
       //do nothing
     }
   }

@@ -5,6 +5,13 @@ import { Panel, Glyphicon } from 'react-bootstrap';
 
 class TrainerRow extends Component {
   render () {
+    const trainerSessionLinkDescriptor = {
+      pathname: "/trainer-session",
+      state: {
+        trainer: this.props.trainer
+      }
+    }
+
     return (
       <Panel className="TrainerRow" header={this.props.trainer.fullname} bsStyle="primary">
         <div className="TrainerRow__avatar">
@@ -13,8 +20,9 @@ class TrainerRow extends Component {
         <div className="TrainerRow__rating">
           {this.props.trainer.starrating}
         </div>
+
         <div>
-          <Link to="/trainer-session">Connect</Link>
+          <Link to={trainerSessionLinkDescriptor}>Connect</Link>
         </div>
       </Panel>
     );
