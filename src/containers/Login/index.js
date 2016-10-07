@@ -72,14 +72,15 @@ class Login extends React.Component {
     });
   }
 
-  setUser() {
+  postUser( is_subscriber ) {
     fetch('https://token.bbtrain.me/user', {
       method: 'POST',
       body: JSON.stringify({
         "guid" : this.state.user.guid,
         "fullname" : this.state.user.firstName + " " + this.state.user.lastName,
-        "available" : "no",
-        "starrating" : "4"
+        "available" : "true",
+        "starrating" : "0",
+        "issubscriber": is_subscriber.toString()
       })
     }).then(checkStatus)
       .then(() => {
@@ -88,6 +89,22 @@ class Login extends React.Component {
   }
 
   // Handler for the push state for the trainer/subscriber containers
+  putUser( is_subscriber ) {
+    fetch('https://token.bbtrain.me/user', {
+      method: 'PUT',
+      body: JSON.stringify({
+        "guid" : this.state.user.guid,
+        "fullname" : this.state.user.firstName + " " + this.state.user.lastName,
+        "available" : "true",
+        "starrating" : "5",
+        "is_subscriber": is_subscriber.toString()
+      })
+    }).then(checkStatus)
+      .then(() => {
+        this.handlePushToUserView();
+      });
+  }
+
   handlePushToUserView() {
     const userType = this.props.params.userType;
     hashHistory.push( userType );
@@ -103,11 +120,16 @@ class Login extends React.Component {
 
   render() {
     const user = this.state.user;
+    const userType = this.props.params.userType;
+    let is_subscriber = false;
+    if( userType === "subscriber" ) {
+      is_subscriber = true;
+    }
     if( user ){
       if(this.guidExists){
-        this.handlePushToUserView();
+        this.putUser( is_subscriber );
       } else {
-        this.setUser();
+        this.postUser( is_subscriber );
       }
     }
     return (
