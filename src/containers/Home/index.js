@@ -12,6 +12,12 @@ class Home extends React.Component {
         <div>
           <Link to="/conversation">Conversation</Link>
         </div>
+        <div>
+          <Link to="/trainer">Trainer</Link>
+        </div>
+        <div>
+          <Link to="/subscriber">Subscriber</Link>
+        </div>
       </div>
     );
   }
