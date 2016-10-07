@@ -22,14 +22,30 @@ class Login extends React.Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.handleUserChange = this.handleUserChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handlePushToUserView = this.handlePushToUserView.bind(this);
+
+    this.guidExists = false;
 
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      user: null
     }
   }
 
   handleLogin(event) {
+    // If an existing user exists already, clear it from the storage.
+    // If we want, later, we can use this GUID to auto login and skip this step.
+    if(localStorage.user){
+      localStorage.removeItem( 'user' );
+    }
+
+    var restoredGuidObjects = { 'guids' : [] };
+
+    if(localStorage.guidObject){
+      restoredGuidObjects = JSON.parse(localStorage.guidObject);
+    }
+
     event.preventDefault();
     fetch('https://token.bbtrain.me/idm', {
       method: 'POST',
@@ -39,35 +55,42 @@ class Login extends React.Component {
     }).then(checkStatus)
       .then(parseJSON)
       .then((data) => {
-        console.log('I COMPLETED');
-        // localStorage.setItem( 'user', JSON.stringify( data ));
-        const userType = this.props.params.userType;
-        console.log("userType: " + userType);
-        hashHistory.push( userType );
-        // this.callSetTrainer();
+        if(restoredGuidObjects.guids.length > 0){
+          var index = restoredGuidObjects.guids.indexOf(data.guid);
+          if(index > -1){
+            this.guidExists = true;
+          }else{
+            restoredGuidObjects.guids[restoredGuidObjects.guids.length] = data.guid;
+          }
+        } else {
+          restoredGuidObjects.guids[0] = data.guid;
+        }
 
-
-        // hashHistory.push('/conversation')
+        localStorage.guidObject = JSON.stringify(restoredGuidObjects);
+        localStorage.user = JSON.stringify( data );
+        this.setState({user: data});
     });
   }
 
-  callSetTrainer() {
-    const updatedUser = {
-      "guid" : this.state.user.guid,
-      "fullname" : this.state.user.firstName + " " + this.state.user.lastName,
-      "available" : "yes",
-      "starrating" : "5"
-    };
-    console.log(updatedUser);
-    fetch('https://iupvv9x848.execute-api.us-west-2.amazonaws.com/test/registertrainer', {
+  setUser() {
+    fetch('https://token.bbtrain.me/user', {
       method: 'POST',
-      body: updatedUser
+      body: JSON.stringify({
+        "guid" : this.state.user.guid,
+        "fullname" : this.state.user.firstName + " " + this.state.user.lastName,
+        "available" : "no",
+        "starrating" : "4"
+      })
     }).then(checkStatus)
-      .then((data) => {
-        console.log('success');
-
-        // hashHistory.push('/conversation')
+      .then(() => {
+        this.handlePushToUserView();
       });
+  }
+
+  // Handler for the push state for the trainer/subscriber containers
+  handlePushToUserView() {
+    const userType = this.props.params.userType;
+    hashHistory.push( userType );
   }
 
   handleUserChange(event) {
@@ -79,6 +102,14 @@ class Login extends React.Component {
   }
 
   render() {
+    const user = this.state.user;
+    if( user ){
+      if(this.guidExists){
+        this.handlePushToUserView();
+      } else {
+        this.setUser();
+      }
+    }
     return (
       <div>
       <div>Login to Beachbody Club</div>
