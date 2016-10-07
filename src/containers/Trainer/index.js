@@ -64,13 +64,17 @@ class Trainer extends Component {
   }
 
   handleInvitation(invite) {
-    this.setState({
-      incomingInvitation: invite
-    });
+    if (this.state.activeConversation) {
+      invite.reject();
+    } else {
+      this.setState({
+        incomingInvitation: invite
+      });
 
-    const guid = invite.from;
-    request(`${URL_BASE}/user/${guid}`)
-      .then(this.handleGetUserSuccess, this.handleGetUserError);
+      const guid = invite.from;
+      request(`${URL_BASE}/user/${guid}`)
+        .then(this.handleGetUserSuccess, this.handleGetUserError);
+    }
   }
 
   acceptInvitation(ev) {
