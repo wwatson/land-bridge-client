@@ -1,20 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import { Panel, Glyphicon } from 'react-bootstrap';
 
 class TrainerRow extends Component {
   render () {
     return (
-      <div className="TrainerRow">
-        <div className="TrainerRow__name">
-          {this.props.trainer.fullname}
-        </div>
+      <Panel className="TrainerRow" header={this.props.trainer.fullname} bsStyle="primary">
         <div className="TrainerRow__rating">
           {this.props.trainer.starrating}
         </div>
         <div>
           <Link to="/trainer-session">Connect</Link>
         </div>
-      </div>
+      </Panel>
     );
   }
 }
