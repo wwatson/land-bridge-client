@@ -2,13 +2,8 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 50px;
-}
-
 .App__header {
   background-color: #222;
-  height: 100px;
   padding: 20px;
   color: white;
 }
