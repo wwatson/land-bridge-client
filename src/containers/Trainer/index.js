@@ -108,7 +108,12 @@ class Trainer extends Component {
       activeConversation: null
     });
 
-    // this.props.router.push('/trainer');
+    this.props.router.push({
+      pathname: '/survey',
+      state: {
+        routeToAfter:'/trainer'
+      }
+    });
   }
 
   render() {
