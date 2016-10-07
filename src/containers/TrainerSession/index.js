@@ -47,24 +47,8 @@ class TrainerSession extends Component {
     }
   }
 
-  componentWillUnmount() {
-    clearTimeout(this.inviteTimer);
-  }
-
   componentDidMount() {
     this.getToken(this.state.trainer.guid);
-
-    this.inviteTimer = setTimeout(() => {
-      this.props.router.push({
-        pathname: '/subscriber',
-        state: {
-          flash: {
-            status: 'danger',
-            message: 'You invitation was declined.'
-          }
-        }
-      });
-    }, 30000);
   }
 
   handleGetTokenSuccess(data) {
