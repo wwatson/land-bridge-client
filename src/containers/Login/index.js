@@ -1,13 +1,13 @@
 import React from 'react';
-import { hashHistory } from 'react-router'
 import { Button } from 'react-bootstrap';
+import { hashHistory } from 'react-router'
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response
   } else {
-    var error = new Error(response.statusText)
-    error.response = response
+    var error = new Error(response.statusText);
+    error.response = response;
     throw error
   }
 }
@@ -22,14 +22,15 @@ class Login extends React.Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.handleUserChange = this.handleUserChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
+
     this.state = {
       username: '',
-      password: '',
-      user: null
+      password: ''
     }
   }
 
   handleLogin(event) {
+    event.preventDefault();
     fetch('https://token.bbtrain.me/idm', {
       method: 'POST',
       headers: {
@@ -38,9 +39,35 @@ class Login extends React.Component {
     }).then(checkStatus)
       .then(parseJSON)
       .then((data) => {
-        this.setState({user: data});
-        hashHistory.push('/conversation')
+        console.log('I COMPLETED');
+        // localStorage.setItem( 'user', JSON.stringify( data ));
+        const userType = this.props.params.userType;
+        console.log("userType: " + userType);
+        hashHistory.push( userType );
+        // this.callSetTrainer();
+
+
+        // hashHistory.push('/conversation')
     });
+  }
+
+  callSetTrainer() {
+    const updatedUser = {
+      "guid" : this.state.user.guid,
+      "fullname" : this.state.user.firstName + " " + this.state.user.lastName,
+      "available" : "yes",
+      "starrating" : "5"
+    };
+    console.log(updatedUser);
+    fetch('https://iupvv9x848.execute-api.us-west-2.amazonaws.com/test/registertrainer', {
+      method: 'POST',
+      body: updatedUser
+    }).then(checkStatus)
+      .then((data) => {
+        console.log('success');
+
+        // hashHistory.push('/conversation')
+      });
   }
 
   handleUserChange(event) {
@@ -79,9 +106,5 @@ class Login extends React.Component {
     );
   }
 }
-
-Login.propTypes = {
-  user: React.PropTypes.object
-};
 
 export default Login;

@@ -16,8 +16,8 @@ class AppRouter extends React.Component {
       <Router history={hashHistory}>
         <Route path="/" component={App}>
           <IndexRoute component={Home} />
-          <Route path="login" component={Login} />
           <Route path="conversation" component={Conversation} />
+          <Route path="/login/:userType" component={Login} />
           <Route path="subscriber" component={Subscriber} />
           <Route path="trainer" component={Trainer} />
           <Route path="trainer-session" component={TrainerSession} />

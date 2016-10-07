@@ -1,22 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Button } from 'react-bootstrap';
 
 class Home extends React.Component {
   render() {
     return (
-      <div>
-        <h2>Home Page Component</h2>
-        <div>
-          <Link to="/login">Login</Link>
+      <div className="Home">
+        <div className="Home__trainer row">
+          <LinkContainer to="/login/trainer" ><Button bsStyle="success" bsSize="large" block>Trainer</Button></LinkContainer>
         </div>
-        <div>
-          <Link to="/conversation">Conversation</Link>
-        </div>
-        <div>
-          <Link to="/trainer">Trainer</Link>
-        </div>
-        <div>
-          <Link to="/subscriber">Subscriber</Link>
+        <div className="Home__subscriber row">
+          <LinkContainer to="/login/subscriber"><Button bsStyle="primary" bsSize="large" block>Subscriber</Button></LinkContainer>
         </div>
       </div>
     );

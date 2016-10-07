@@ -8,13 +8,25 @@
 
 .App__header {
   background-color: #222;
-  height: 150px;
+  height: 100px;
   padding: 20px;
   color: white;
 }
 
 .App__body {
   font-size: large;
+}
+
+.Home {
+    margin: 20px;
+}
+
+.Home .row {
+    margin-bottom: 20px;
+}
+
+.Home__success {
+    /*width: 80%;*/
 }
 
 @keyframes App-logo-spin {

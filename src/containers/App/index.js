@@ -3,13 +3,13 @@ import logo from './beachbody-new-logo.png';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
+import { LinkContainer } from 'react-router-bootstrap';
 
 function App(props) {
   return (
     <div className="App">
       <div className="App__header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h2>Welcome to React</h2>
+        <LinkContainer to="/"><img src={logo} className="App-logo" alt="logo" /></LinkContainer>
       </div>
       <div className="App__body">
         {React.Children.toArray(props.children)}
