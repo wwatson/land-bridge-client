@@ -48,7 +48,10 @@
 }
 
 .TrainerRow__connect{
+}
+
+.TrainerRow__connect a {
     width: 150px;
-    display: block;
+    display: inline-block;
 }
 
