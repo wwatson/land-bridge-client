@@ -38,3 +38,23 @@
     margin-bottom: 10px;
 }
 
+.TrainerList{
+    margin: 0 auto;
+    width: 300px;
+}
+
+.TrainerRow{
+    display: block;
+}
+
+.TrainerRow__avatar{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.Trainer-logo{
+    width: 50px;
+    height: 50px;
+}
+

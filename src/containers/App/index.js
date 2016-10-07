@@ -3,7 +3,6 @@ import logo from './beachbody-new-logo.png';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-// import { LinkContainer } from 'react-router-bootstrap';
 
 function App(props) {
   return (
