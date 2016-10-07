@@ -11,39 +11,6 @@ import avatar from './avatar-empty.png';
 
 const URL_BASE = process.env.REACT_APP_TOKEN_API_ENDPOINT_BASE;
 
-const STATIC_TRAINERS = [
-  {
-    guid: "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA",
-    fullname: "Steve Polk",
-    available: "yes",
-    starrating: "5"
-  },
-  {
-    guid: "BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB",
-    fullname: "Cameron Brooks",
-    available: "yes",
-    starrating: "5"
-  },
-  {
-    guid: "CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC",
-    fullname: "Ramesh Tirumala",
-    available: "yes",
-    starrating: "5"
-  },
-  {
-    guid: "DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD",
-    fullname: "Joseph Presley",
-    available: "yes",
-    starrating: "5"
-  },
-  {
-    guid: "EEEEEEEE-EEEE-EEEE-EEEE-EEEEEEEEEEEE",
-    fullname: "Will Watson",
-    available: "yes",
-    starrating: "5"
-  }
-];
-
 class Subscriber extends Component {
   constructor(props) {
     super(props);
@@ -65,14 +32,13 @@ class Subscriber extends Component {
       flashStatus: flashStatus,
       isLoadingTrainers: false,
       getTrainersLoadError: false,
-      // trainers: false,
-      trainers: STATIC_TRAINERS,
+      trainers: false,
       user
     };
   }
 
   componentDidMount() {
-    // this.getTrainers();
+    this.getTrainers();
   }
 
   getTrainers() {
@@ -81,14 +47,14 @@ class Subscriber extends Component {
       getTrainersLoadError: false,
       trainers: false
     });
-    const url = `${URL_BASE}/trainers`;
+    const url = `${URL_BASE}/user`;
     request(url).then(this.handleGetTrainersSuccess).catch(this.handleGetTrainersError);
   }
 
   handleGetTrainersSuccess(data) {
     this.setState({
       isLoadingTrainers: false,
-      trainers: data.trainers
+      trainers: data
     });
   }
 

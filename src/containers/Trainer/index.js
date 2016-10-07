@@ -47,13 +47,12 @@ class Trainer extends Component {
   }
 
   componentDidMount() {
-    this.getToken('BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB');
-    // this.getToken(this.state.user.guid);
+    this.getToken(this.state.user.guid);
   }
 
   handleInvitation(invite) {
-    // request(`${URL_BASE}/token?identity=${identity}`)
-    //   .then(this.handleGetTokenSuccess, this.handleGetTokenError);
+    // request(`${URL_BASE}/user?identity=${identity}`)
+    //   .then(this.handleGetUserSuccess, this.handleGetUserError);
 
     this.setState({
       incomingInvitation: invite,
