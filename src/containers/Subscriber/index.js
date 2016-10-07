@@ -52,9 +52,13 @@ class Subscriber extends Component {
   }
 
   handleGetTrainersSuccess(data) {
+    const filteredTrainers = data.filter((trainer) => {
+      return trainer.issubscriber === 'true';
+    });
+
     this.setState({
       isLoadingTrainers: false,
-      trainers: data
+      trainers: filteredTrainers
     });
   }
 
