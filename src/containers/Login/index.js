@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import { hashHistory } from 'react-router'
 
 function checkStatus(response) {
@@ -113,22 +113,14 @@ class Login extends React.Component {
     return (
       <div>
         <form className="loginForm" onSubmit={this.handleLogin}>
-          <div className="row">
-            <input
-              type="text"
-              placeholder="email address"
-              value={this.state.username}
-              onChange={this.handleUserChange}
-            />
-          </div>
-          <div className="row">
-            <input
-              type="password"
-              placeholder="password"
-              value={this.state.password}
-              onChange={this.handlePasswordChange}
-            />
-          </div>
+          <FormGroup>
+            <ControlLabel>Email Address</ControlLabel>
+            <FormControl type="text" placeholder="Enter email address" value={this.state.username} onChange={this.handleUserChange} />
+          </FormGroup>
+          <FormGroup>
+            <ControlLabel>Password</ControlLabel>
+            <FormControl type="password" placeholder="Enter password" value={this.state.password} onChange={this.handlePasswordChange} />
+          </FormGroup>
           <Button type="submit" value="Post"
                   bsStyle="success">Go!</Button>
         </form>
