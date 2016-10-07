@@ -1,5 +1,5 @@
 import React from 'react'
-import { Router, Route, IndexRoute, hashHistory } from 'react-router'
+import { Router, Route, IndexRoute, hashHistory, withRouter } from 'react-router'
 
 import App from './containers/App'
 import Home from './containers/Home'
@@ -9,6 +9,8 @@ import Subscriber from './containers/Subscriber'
 import Trainer from './containers/Trainer'
 import TrainerSession from './containers/TrainerSession'
 import NotFound from './containers/NotFound'
+
+const RoutedTrainerSession = withRouter(TrainerSession);
 
 class AppRouter extends React.Component {
   render() {
@@ -20,7 +22,7 @@ class AppRouter extends React.Component {
           <Route path="/login/:userType" component={Login} />
           <Route path="subscriber" component={Subscriber} />
           <Route path="trainer" component={Trainer} />
-          <Route path="trainer-session" component={TrainerSession} />
+          <Route path="trainer-session" component={RoutedTrainerSession} />
           <Route path="*" component={NotFound} />
         </Route>
       </Router>
