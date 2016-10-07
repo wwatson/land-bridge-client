@@ -97,7 +97,7 @@ class Login extends React.Component {
         "fullname" : this.state.user.firstName + " " + this.state.user.lastName,
         "available" : "true",
         "starrating" : "5",
-        "is_subscriber": is_subscriber.toString()
+        "issubscriber": is_subscriber.toString()
       })
     }).then(checkStatus)
       .then(() => {
