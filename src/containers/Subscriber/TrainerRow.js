@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import avatar from './avatar-empty.png';
-import { Panel, Glyphicon, Button } from 'react-bootstrap';
+import { Panel, Button } from 'react-bootstrap';
 
 class TrainerRow extends Component {
   render () {

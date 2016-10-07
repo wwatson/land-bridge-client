@@ -5,6 +5,7 @@
  */
 
 import React, { Component, PropTypes } from 'react';
+import { ProgressBar } from 'react-bootstrap';
 
 import TwilioCommon from 'twilio-common';
 import TwilioConversations from 'twilio-conversations';
@@ -124,8 +125,9 @@ class TrainerSession extends Component {
     }
 
     return (
-      <div>
-        Attempting to connect with {this.state.trainer.fullname}
+      <div className="TrainerSession">
+        <p>Attempting to connect with {this.state.trainer.fullname}</p>
+        <ProgressBar active now={50}/>
         <div className="">
           {conversationContent}
         </div>
