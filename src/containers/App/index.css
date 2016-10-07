@@ -66,10 +66,13 @@
 }
 
 .media-container {
-
+    width: 500px;
 }
 .video-container {
     position: relative;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    height: 500px;
 }
 .video-remote {
     position: absolute;

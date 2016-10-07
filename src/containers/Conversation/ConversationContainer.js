@@ -28,10 +28,10 @@ class ConversationContainer extends React.Component {
 
   render() {
     return (
-      <div class="media-container">
-        <div class="video-container">
-          <div class="video-remote" ref='remoteMedia'></div>
-          <div class="video-local" ref='localMedia'></div>
+      <div className="media-container">
+        <div className="video-container">
+          <div className="video-remote" ref='remoteMedia'></div>
+          <div className="video-local" ref='localMedia'></div>
         </div>
       </div>
     );
