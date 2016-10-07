@@ -47,9 +47,15 @@ class TrainerSession extends Component {
     }
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.inviteTimer);
+  }
+
   componentDidMount() {
+    this.getToken(this.state.trainer.guid);
+
     this.inviteTimer = setTimeout(() => {
-      self.props.router.push({
+      this.props.router.push({
         pathname: '/subscriber',
         state: {
           flash: {
@@ -58,15 +64,7 @@ class TrainerSession extends Component {
           }
         }
       });
-    })
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.inviteTimer);
-  }
-
-  componentDidMount() {
-    this.getToken('test');
+    }, 30000);
   }
 
   handleGetTokenSuccess(data) {
@@ -157,15 +155,19 @@ class TrainerSession extends Component {
       );
     }
 
-    let progressBar;
-    if (!this.activeConversation) {
-      progressBar = (<ProgressBar active now={50}/>);
+    let progressBarContent;
+    if (!this.state.activeConversation) {
+      progressBarContent = (
+        <div>
+          <p>Attempting to connect with {this.state.trainer.fullname}</p>
+          <ProgressBar active now={50}/>
+        </div>
+      );
     }
 
     return (
       <div className="TrainerSession">
-        <p>Attempting to connect with {this.state.trainer.fullname}</p>
-        {progressBar}
+        {progressBarContent}
         <div className="">
           {conversationContent}
         </div>

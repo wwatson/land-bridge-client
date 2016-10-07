@@ -28,6 +28,8 @@ class Trainer extends Component {
     this.handleInvitation = this.handleInvitation.bind(this);
     this.acceptInvitation = this.acceptInvitation.bind(this);
     this.rejectInvitation = this.rejectInvitation.bind(this);
+    this.handleGetUserSuccess = this.handleGetUserSuccess.bind(this);
+    this.handleGetUserError = this.handleGetUserError.bind(this);
 
     const user = JSON.parse(localStorage.user);
     this.state = {
@@ -50,17 +52,25 @@ class Trainer extends Component {
     this.getToken(this.state.user.guid);
   }
 
-  handleInvitation(invite) {
-    // request(`${URL_BASE}/user?identity=${identity}`)
-    //   .then(this.handleGetUserSuccess, this.handleGetUserError);
-
+  handleGetUserSuccess(data) {
     this.setState({
-      incomingInvitation: invite,
-      incomingInvitationUser: {
-        name: "Steve Polk"
-      },
+      incomingInvitationUser: data,
       showModal: true
     });
+  }
+
+  handleGetUserError(error) {
+    console.log('error fetching user information');
+  }
+
+  handleInvitation(invite) {
+    this.setState({
+      incomingInvitation: invite
+    });
+
+    const guid = invite.from;
+    request(`${URL_BASE}/user/${guid}`)
+      .then(this.handleGetUserSuccess, this.handleGetUserError);
   }
 
   acceptInvitation(ev) {
