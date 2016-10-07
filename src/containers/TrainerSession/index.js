@@ -15,6 +15,8 @@ import ConversationContainer from '../Conversation/ConversationContainer';
 
 const URL_BASE = process.env.REACT_APP_TOKEN_API_ENDPOINT_BASE;
 
+const INVITE_REJECTED = 'CONVERSATION_INVITE_REJECTED';
+
 class TrainerSession extends Component {
   constructor(props) {
     super(props);
@@ -50,6 +52,7 @@ class TrainerSession extends Component {
   }
 
   handleGetTokenSuccess(data) {
+    const self = this;
     console.log('token request successful');
     console.log(`token: ${data.token}`);
 
@@ -62,8 +65,20 @@ class TrainerSession extends Component {
     conversationsClient.inviteToConversation(this.state.trainer.guid).then(
       this.conversationStarted,
       function (error) {
-        console.log('Unable to create conversation');
-        console.error('Unable to create conversation', error);
+        if (error.name === INVITE_REJECTED) {
+          self.props.router.push({
+            pathname: '/subscriber',
+            state: {
+              flash: {
+                status: 'danger',
+                message: 'You invitation was declined.'
+              }
+            }
+          });
+        } else {
+          console.log('Unable to create conversation');
+          console.error('Unable to create conversation', error);
+        }
       });
 
     this.setState({

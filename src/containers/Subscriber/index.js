@@ -44,14 +44,33 @@ class Subscriber extends Component {
   constructor(props) {
     super(props);
 
+    let flashMessage = false;
+    let flashStatus = false;
+
+    if (this.props.location.state && this.props.location.state.flash) {
+      flashMessage = this.props.location.state.flash.message;
+      flashStatus = this.props.location.state.flash.status;
+    }
+
     this.state = {
-      trainers: STATIC_TRAINERS // TODO: Fetch these when the API is ready
+      trainers: STATIC_TRAINERS, // TODO: Fetch these when the API is ready
+      flashMessage: flashMessage,
+      flashStatus: flashStatus
     };
   }
 
   render() {
+    let flashContent;
+
+    if (this.state.flashMessage && this.state.flashStatus) {
+      const alertClassName = `alert alert-${this.state.flashStatus}`;
+      flashContent = (<div className={alertClassName}>{this.state.flashMessage}</div>)
+    }
+
     return (
       <div className="Subscriber">
+        {flashContent}
+
         <div className="Subscriber__header">
           <h2>Subscriber</h2>
         </div>

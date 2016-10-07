@@ -13,6 +13,7 @@ import request from '../../utils/request.js';
 import ConversationContainer from '../Conversation/ConversationContainer';
 
 import avatar from '../Subscriber/avatar-empty.png';
+import { Button, Modal } from 'react-bootstrap';
 
 const URL_BASE = process.env.REACT_APP_TOKEN_API_ENDPOINT_BASE;
 
@@ -25,6 +26,8 @@ class Trainer extends Component {
     this.conversationStarted = this.conversationStarted.bind(this);
     this.disconnectActiveConversation = this.disconnectActiveConversation.bind(this);
     this.handleInvitation = this.handleInvitation.bind(this);
+    this.acceptInvitation = this.acceptInvitation.bind(this);
+    this.rejectInvitation = this.rejectInvitation.bind(this);
 
     const user = JSON.parse(localStorage.user);
     this.state = {
@@ -37,7 +40,9 @@ class Trainer extends Component {
       conversationsClient: false,
       previewMedia: null,
       activeConversation: null,
-      user: user
+      user: user,
+      showModal: false,
+      incomingInvitation: false
     };
   }
 
@@ -47,13 +52,30 @@ class Trainer extends Component {
   }
 
   handleInvitation(invite) {
-    if (window.confirm(`Incoming request from ${invite.from}`)) {
-      invite.accept().then(this.conversationStarted, () => {
-        console.log('error in accepting')
-      });
-    } else {
-      invite.reject();
-    }
+    this.setState({
+      incomingInvitation: invite,
+      showModal: true
+    });
+  }
+
+  acceptInvitation(ev) {
+    ev.preventDefault();
+    this.setState({
+      incomingInvitation: false,
+      showModal: false
+    });
+    this.state.incomingInvitation.accept().then(this.conversationStarted, () => {
+      console.log('error in accepting')
+    });
+  }
+
+  rejectInvitation(ev) {
+    ev.preventDefault();
+    this.setState({
+      incomingInvitation: false,
+      showModal: false
+    });
+    this.state.incomingInvitation.reject();
   }
 
   handleGetTokenSuccess(data) {
@@ -165,9 +187,24 @@ class Trainer extends Component {
 
           {conversationContent}
         </div>
+
+        <Modal show={this.state.showModal}>
+          <Modal.Header>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <h4>Text in a modal</h4>
+            <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button className="danger" onClick={this.rejectInvitation}>Reject</Button>
+            <Button className="primary" onClick={this.acceptInvitation}>Accept</Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     );
   }
 }
+
 
 export default Trainer;
